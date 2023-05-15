@@ -1,6 +1,7 @@
 
 
 using Konyvtar_nyilvantarto;
+using Konyvtar_nyilvantarto.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IBookService, BookService>();
 builder.Services.AddSingleton<IBookRepository, BookRepository>();
-builder.Services.AddDbContext<KonyvtarNyilvantartoContext>(options =>
+builder.Services.AddDbContext<LibraryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
 });
