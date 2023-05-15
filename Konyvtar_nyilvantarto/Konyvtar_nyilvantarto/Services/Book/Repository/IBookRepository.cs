@@ -2,14 +2,14 @@
 {
     public interface IBookRepository
     {
-        Book Get(string accessionNumber);
+        Task<Book> Get(Guid Id);
 
-        IEnumerable<Book> GetAll();
+        Task<IEnumerable<Book>> GetAll();
 
-        void Insert(Book book);
+        Task<Book> Insert(Book Book);
 
-        void Update(Book book);
+        Task<Book> Update(Book Book);
 
-        void Delete(string accessionNumber);
+        Task Delete(Guid Id);
     }
 }
