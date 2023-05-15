@@ -12,8 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IBookService, BookService>();
-builder.Services.AddSingleton<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddDbContext<LibraryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
