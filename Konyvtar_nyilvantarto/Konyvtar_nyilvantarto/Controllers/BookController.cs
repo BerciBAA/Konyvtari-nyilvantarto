@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Konyvtar_nyilvantarto.Contexts;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Controllers
 {
@@ -6,78 +8,77 @@ namespace Konyvtar_nyilvantarto.Controllers
     [Route("[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly BookService _BookService;
 
-        public BookController(IBookRepository BookRepository)
+        public BookController(BookService BookService)
         {
-            this._bookRepository = BookRepository;
+            this._BookService = BookService;
         }
 
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Book>> Get() {
-            IEnumerable<Book> books = _bookRepository.GetAll();
-            return Ok(books);
-        }
-
-        [HttpGet("{accessionNumber}")]
-        public ActionResult<Book> Get(string accessionNumber)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<Book>> Get(Guid Id)
         {
-            var book = _bookRepository.Get(accessionNumber);
-            if (book is null) {
+            var Book = await _BookService.Get(Id);
+            if (Book is null)
+            {
                 return NotFound();
             }
-            return Ok(book);
+            return Ok(Book);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Book>>> Get() {
+            IEnumerable<Book> Books = await _BookService.GetAll();
+            return Ok(Books);
         }
 
         [HttpPost]
-        public ActionResult InsertPost([FromBody] Book book)
+        public async Task<ActionResult> InsertPost([FromBody] Book Book)
         {
-            var existingBook = _bookRepository.Get(book.accessionNumber);
+            var ExistingBook = await _BookService.Get(Book.Id);
 
-            if (existingBook is not null) {
+            if (ExistingBook is not null) {
                 return Conflict();
             }
-            _bookRepository.Insert(book);
-
-            return Ok();
+            var InsertedBook = await _BookService.Insert(Book);
+          
+            return Ok(InsertedBook);
         }
 
         [HttpPut()]
-        public ActionResult UpdatePost(String accessionNumber, [FromBody] Book book)
+        public async Task<ActionResult> UpdatePost(Guid Id, [FromBody] Book Book)
         {
-            if (accessionNumber != book.accessionNumber) {
-                return BadRequest();
+            if (Book.Id == Id) {
 
+                return BadRequest();
             }
 
-            var existingBook = _bookRepository.Get(book.accessionNumber);
+            var ExistingBook = await _BookService.Get(Book.Id);
 
 
-            if (existingBook is null)
+            if (ExistingBook is null)
             {
                 return NotFound();
 
             }
-
-            _bookRepository.Update(book);
-
-            return Ok();
+            
+            var UpdatedBook = await _BookService.Update(Book);
+            return Ok(UpdatedBook);
         }
 
 
-        [HttpDelete("{accessionNumber}")]
-        public ActionResult Delete(string accessionNumber)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> Delete(Guid Id)
         {
-            var existingBook = _bookRepository.Get(accessionNumber);
+            var ExistingBook = await _BookService.Get(Id);
 
-            if (existingBook is null)
+            if (ExistingBook is null)
             {
                 return NotFound();
 
             }
 
-            _bookRepository.Delete(accessionNumber);
+            await _BookService.Delete(ExistingBook.Id);
             return Ok();
         }
     }

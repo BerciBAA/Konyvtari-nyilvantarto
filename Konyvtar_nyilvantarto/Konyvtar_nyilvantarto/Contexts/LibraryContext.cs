@@ -10,5 +10,10 @@ namespace Konyvtar_nyilvantarto.Contexts
         }
 
         public DbSet<Book> Books { get; set; }
+
+        internal Task FindAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
