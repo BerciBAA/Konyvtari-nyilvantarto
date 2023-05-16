@@ -1,4 +1,8 @@
-﻿using Konyvtar_nyilvantarto.Contexts;
+﻿using AutoMapper;
+using FluentValidation;
+using Konyvtar_nyilvantarto.Contexts;
+using Konyvtar_nyilvantarto.Contracts.Book;
+using Konyvtar_nyilvantarto.Services.Book.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,17 +12,21 @@ namespace Konyvtar_nyilvantarto.Controllers
     [Route("[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly BookService _BookService;
-
-        public BookController(BookService BookService)
+        private IValidator<CreateBookRequest> _validatorForCreateReq;
+        private IMapper _mapper;
+        private readonly IBookService _bookService;
+       
+        public BookController(IBookService bookService, IMapper mapper, IValidator<CreateBookRequest> validatorForCreateReq)
         {
-            this._BookService = BookService;
+            _validatorForCreateReq = validatorForCreateReq;
+            _bookService = bookService;
+            _mapper = mapper;
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Book>> Get(Guid Id)
+        public async Task<ActionResult<BookEntity>> Get(Guid Id)
         {
-            var Book = await _BookService.Get(Id);
+            var Book = await _bookService.Get(Id);
             if (Book is null)
             {
                 return NotFound();
@@ -27,33 +35,38 @@ namespace Konyvtar_nyilvantarto.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> Get() {
-            IEnumerable<Book> Books = await _BookService.GetAll();
+        public async Task<ActionResult<IEnumerable<BookEntity>>> Get() {
+            IEnumerable<BookEntity> Books = await _bookService.GetAll();
             return Ok(Books);
         }
 
         [HttpPost]
-        public async Task<ActionResult> InsertPost([FromBody] Book Book)
+        public async Task<ActionResult> InsertPost([FromBody] CreateBookRequest Book)
         {
-            var ExistingBook = await _BookService.Get(Book.Id);
+            var validationResult = _validatorForCreateReq.Validate(Book);
 
-            if (ExistingBook is not null) {
+            if (!validationResult.IsValid) { 
+                return BadRequest(validationResult.Errors);
+            }
+            var bookDto = _mapper.Map<CreateBookRequest, BookDto>(Book);
+            var InsertedBook = await _bookService.Insert(bookDto);
+            if (InsertedBook is null) {
                 return Conflict();
             }
-            var InsertedBook = await _BookService.Insert(Book);
-          
-            return Ok(InsertedBook);
+            var result = _mapper.Map<BookDto, BookResponse>(InsertedBook);
+            return Created($"/book/{InsertedBook.Id}",InsertedBook);
         }
 
         [HttpPut()]
-        public async Task<ActionResult> UpdatePost(Guid Id, [FromBody] Book Book)
+        public async Task<ActionResult> UpdatePost(Guid Id, BookEntity Book)
         {
-            if (Book.Id == Id) {
+
+            if (Book.Id != Id) {
 
                 return BadRequest();
             }
 
-            var ExistingBook = await _BookService.Get(Book.Id);
+            var ExistingBook = await _bookService.Get(Book.Id);
 
 
             if (ExistingBook is null)
@@ -62,7 +75,7 @@ namespace Konyvtar_nyilvantarto.Controllers
 
             }
             
-            var UpdatedBook = await _BookService.Update(Book);
+            var UpdatedBook = await _bookService.Update(Book);
             return Ok(UpdatedBook);
         }
 
@@ -70,7 +83,7 @@ namespace Konyvtar_nyilvantarto.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult> Delete(Guid Id)
         {
-            var ExistingBook = await _BookService.Get(Id);
+            var ExistingBook = await _bookService.Get(Id);
 
             if (ExistingBook is null)
             {
@@ -78,7 +91,7 @@ namespace Konyvtar_nyilvantarto.Controllers
 
             }
 
-            await _BookService.Delete(ExistingBook.Id);
+            await _bookService.Delete(ExistingBook.Id);
             return Ok();
         }
     }

@@ -1,7 +1,10 @@
 
 
+using FluentValidation;
 using Konyvtar_nyilvantarto;
 using Konyvtar_nyilvantarto.Contexts;
+using Konyvtar_nyilvantarto.Contracts.Book;
+using Konyvtar_nyilvantarto.Validators;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +21,8 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
 });
+builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

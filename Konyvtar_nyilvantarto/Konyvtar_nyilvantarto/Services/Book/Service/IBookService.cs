@@ -1,14 +1,16 @@
-﻿namespace Konyvtar_nyilvantarto
+﻿using Konyvtar_nyilvantarto.Services.Book.Model;
+
+namespace Konyvtar_nyilvantarto
 {
     public interface IBookService
     {
-        Task<Book> Get(Guid Id);
+        Task<BookEntity> Get(Guid Id);
 
-        Task<IEnumerable<Book>> GetAll();
+        Task<IEnumerable<BookEntity>> GetAll();
 
-        Task<Book> Insert(Book Book);
+        Task<BookDto> Insert(BookDto Book);
 
-        Task<Book> Update(Book Book);
+        Task<BookEntity> Update(BookEntity Book);
 
         Task Delete(Guid Id);
     }

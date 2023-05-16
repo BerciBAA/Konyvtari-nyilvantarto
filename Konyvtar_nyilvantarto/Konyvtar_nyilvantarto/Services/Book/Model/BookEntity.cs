@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Konyvtar_nyilvantarto
 {
-    public class Book
+    public class BookEntity
     {
         [Required]
         [Key]
