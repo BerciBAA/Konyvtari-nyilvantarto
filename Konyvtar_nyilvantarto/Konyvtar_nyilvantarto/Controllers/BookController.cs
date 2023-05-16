@@ -58,13 +58,8 @@ namespace Konyvtar_nyilvantarto.Controllers
         }
 
         [HttpPut()]
-        public async Task<ActionResult> UpdatePost(Guid Id, BookEntity Book)
+        public async Task<IActionResult> UpdatePost(BookEntity Book)
         {
-
-            if (Book.Id != Id) {
-
-                return BadRequest();
-            }
 
             var ExistingBook = await _bookService.Get(Book.Id);
 
