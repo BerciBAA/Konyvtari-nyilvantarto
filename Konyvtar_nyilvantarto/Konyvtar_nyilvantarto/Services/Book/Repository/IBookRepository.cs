@@ -2,13 +2,13 @@
 {
     public interface IBookRepository
     {
-        Task<Book> Get(Guid Id);
+        Task<BookEntity> Get(Guid Id);
 
-        Task<IEnumerable<Book>> GetAll();
+        Task<IEnumerable<BookEntity>> GetAll();
 
-        Task<Book> Insert(Book Book);
+        Task<BookEntity> Insert(BookEntity Book);
 
-        Task<Book> Update(Book Book);
+        Task<BookEntity> Update(BookEntity Book);
 
         Task Delete(Guid Id);
     }

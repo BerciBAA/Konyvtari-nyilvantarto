@@ -1,36 +1,44 @@
-﻿namespace Konyvtar_nyilvantarto
+﻿using AutoMapper;
+using Konyvtar_nyilvantarto.Services.Book.Model;
+
+namespace Konyvtar_nyilvantarto
 {
     public class BookService : IBookService
     {
-        private readonly IBookRepository _BookRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IMapper _mapper;
 
-        public BookService(IBookRepository BookRepository) {
-            this._BookRepository = BookRepository;
+        public BookService(IBookRepository bookRepository, IMapper mapper) {
+            _bookRepository = bookRepository;
+            _mapper = mapper;
         }
 
         public async Task Delete(Guid Id)
         {
-            await _BookRepository.Delete(Id);
+            await _bookRepository.Delete(Id);
         }
 
-        public async Task<Book> Get(Guid Id)
+        public async Task<BookEntity> Get(Guid Id)
         {
-            return await _BookRepository.Get(Id);
+            return await _bookRepository.Get(Id);
         }
 
-        public async Task<IEnumerable<Book>> GetAll()
+        public async Task<IEnumerable<BookEntity>> GetAll()
         {
-            return await _BookRepository.GetAll();
+            return await _bookRepository.GetAll();
         }
 
-        public async Task<Book> Insert(Book Book)
+        public async Task<BookDto> Insert(BookDto book)
         {
-            return await _BookRepository.Insert(Book);
+
+            var bookEntity = _mapper.Map<BookDto, BookEntity>(book);
+            var result = await _bookRepository.Insert(bookEntity);
+            return _mapper.Map<BookEntity, BookDto>(result);
         }
 
-        public async Task<Book> Update(Book Book)
+        public async Task<BookEntity> Update(BookEntity Book)
         {
-            return await _BookRepository.Update(Book);
+            return await _bookRepository.Update(Book);
         }
     }
 }
