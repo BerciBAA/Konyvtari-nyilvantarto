@@ -7,6 +7,10 @@ using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
 using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Validators;
 using Microsoft.EntityFrameworkCore;
+using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators;
+using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Models;
+using Konyvtar_nyilvantarto.Validators.Common;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,19 +26,29 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IBookService, BookService>();
-builder.Services.AddSingleton<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 builder.Services.AddScoped<ILibaryMemberService, LibaryMemberService>();
 builder.Services.AddScoped<ILibraryMemberRepository, LibraryMemberRepository>();
 
+builder.Services.AddScoped<IValidator<Guid>, GuidValidator>();
 builder.Services.AddScoped<IValidator<CreateLibraryMemberRequest>, CreateLibraryMemberRequestValidator>();
+builder.Services.AddScoped<IValidator<QueryParameterValidatorObject>, LibraryMemberQueryParameterValidator>();
+builder.Services.AddScoped<IValidator<UpdateLibraryMemberRequest>, UpdateLibraryMemberRequestValidator>();
 
 builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<LibraryContext>();
+
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
