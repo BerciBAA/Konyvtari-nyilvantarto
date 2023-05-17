@@ -9,8 +9,7 @@ namespace Konyvtar_nyilvantarto.Contexts
         {
 
         }
-
-        public DbSet<Book> Books { get; set; }
+        public DbSet<BookEntity> Books { get; set; }
 
         public DbSet<LibraryMemberEntity> LibraryMembers { get; set; }
     }

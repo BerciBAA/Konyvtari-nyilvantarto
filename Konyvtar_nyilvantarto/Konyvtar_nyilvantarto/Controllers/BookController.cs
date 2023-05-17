@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using FluentValidation;
+using Konyvtar_nyilvantarto.Contexts;
+using Konyvtar_nyilvantarto.Contracts.Book;
+using Konyvtar_nyilvantarto.Services.Book.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Controllers
 {
@@ -6,78 +12,86 @@ namespace Konyvtar_nyilvantarto.Controllers
     [Route("[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly IBookRepository _bookRepository;
-
-        public BookController(IBookRepository BookRepository)
+        private IValidator<CreateBookRequest> _validatorForCreateReq;
+        private IMapper _mapper;
+        private readonly IBookService _bookService;
+       
+        public BookController(IBookService bookService, IMapper mapper, IValidator<CreateBookRequest> validatorForCreateReq)
         {
-            this._bookRepository = BookRepository;
+            _validatorForCreateReq = validatorForCreateReq;
+            _bookService = bookService;
+            _mapper = mapper;
         }
 
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Book>> Get() {
-            IEnumerable<Book> books = _bookRepository.GetAll();
-            return Ok(books);
-        }
-
-        [HttpGet("{accessionNumber}")]
-        public ActionResult<Book> Get(string accessionNumber)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<BookEntity>> Get(Guid Id)
         {
-            var book = _bookRepository.Get(accessionNumber);
-            if (book is null) {
+            var Book = await _bookService.Get(Id);
+            if (Book is null)
+            {
                 return NotFound();
             }
-            return Ok(book);
+            return Ok(Book);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookEntity>>> Get() {
+            IEnumerable<BookEntity> Books = await _bookService.GetAll();
+            return Ok(Books);
         }
 
         [HttpPost]
-        public ActionResult InsertPost([FromBody] Book book)
+        public async Task<ActionResult> InsertPost([FromBody] CreateBookRequest Book)
         {
-            var existingBook = _bookRepository.Get(book.accessionNumber);
+            var validationResult = _validatorForCreateReq.Validate(Book);
 
-            if (existingBook is not null) {
+            if (!validationResult.IsValid) { 
+                return BadRequest(validationResult.Errors);
+            }
+            var bookDto = _mapper.Map<CreateBookRequest, BookDto>(Book);
+            var InsertedBook = await _bookService.Insert(bookDto);
+            if (InsertedBook is null) {
                 return Conflict();
             }
-            _bookRepository.Insert(book);
-
-            return Ok();
+            var result = _mapper.Map<BookDto, BookResponse>(InsertedBook);
+            return Created($"/book/{InsertedBook.Id}",InsertedBook);
         }
 
         [HttpPut()]
-        public ActionResult UpdatePost(String accessionNumber, [FromBody] Book book)
+        public async Task<ActionResult> UpdatePost(Guid Id, BookEntity Book)
         {
-            if (accessionNumber != book.accessionNumber) {
-                return BadRequest();
 
+            if (Book.Id != Id) {
+
+                return BadRequest();
             }
 
-            var existingBook = _bookRepository.Get(book.accessionNumber);
+            var ExistingBook = await _bookService.Get(Book.Id);
 
 
-            if (existingBook is null)
+            if (ExistingBook is null)
             {
                 return NotFound();
 
             }
-
-            _bookRepository.Update(book);
-
-            return Ok();
+            
+            var UpdatedBook = await _bookService.Update(Book);
+            return Ok(UpdatedBook);
         }
 
 
-        [HttpDelete("{accessionNumber}")]
-        public ActionResult Delete(string accessionNumber)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> Delete(Guid Id)
         {
-            var existingBook = _bookRepository.Get(accessionNumber);
+            var ExistingBook = await _bookService.Get(Id);
 
-            if (existingBook is null)
+            if (ExistingBook is null)
             {
                 return NotFound();
 
             }
 
-            _bookRepository.Delete(accessionNumber);
+            await _bookService.Delete(ExistingBook.Id);
             return Ok();
         }
     }

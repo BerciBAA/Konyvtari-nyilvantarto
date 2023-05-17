@@ -4,6 +4,7 @@ using Konyvtar_nyilvantarto.Contexts;
 using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Repository;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
+using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Validators;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,8 @@ builder.Services.AddScoped<ILibaryMemberService, LibaryMemberService>();
 builder.Services.AddScoped<ILibraryMemberRepository, LibraryMemberRepository>();
 
 builder.Services.AddScoped<IValidator<CreateLibraryMemberRequest>, CreateLibraryMemberRequestValidator>();
+
+builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

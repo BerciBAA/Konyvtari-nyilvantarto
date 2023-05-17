@@ -1,35 +1,52 @@
-﻿namespace Konyvtar_nyilvantarto
+﻿using Konyvtar_nyilvantarto.Contexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace Konyvtar_nyilvantarto
 {
     public class BookRepository : IBookRepository
     {
-        private Dictionary<String,Book> _books = new();
+        
+        private LibraryContext _libraryContext;
 
-        public void Delete(string accessionNumber)
-        {
-            _books.Remove(accessionNumber);
+        public BookRepository(LibraryContext libraryContext) {
+            _libraryContext = libraryContext;
         }
 
-        public Book Get(string accessionNumber)
+        public async Task<BookEntity> Get(Guid Id)
         {
-            return _books.TryGetValue(accessionNumber, out Book book) ? book : null;
+            return await _libraryContext.Books.FindAsync(Id);
         }
 
-        public IEnumerable<Book> GetAll()
+        public async Task<IEnumerable<BookEntity>> GetAll()
         {
-            return _books.Values;
+            return await _libraryContext.Books.ToListAsync();
         }
 
-        public void Insert(Book book)
+        public async Task<BookEntity> Insert(BookEntity Book)
         {
-            if (!_books.ContainsKey(book.accessionNumber)) {
-                _books[book.accessionNumber] = book;
-            }
-            
+            _libraryContext.Books.Add(Book);
+            await _libraryContext.SaveChangesAsync();
+            var InsertedBook = await _libraryContext.Books.FindAsync(Book.Id);
+            return InsertedBook;
         }
 
-        public void Update(Book book)
+        public async Task<BookEntity> Update(BookEntity Book)
         {
-            _books[book.accessionNumber] = book;
+            var ExistedBook = await _libraryContext.Books.FindAsync(Book.Id);
+            ExistedBook.Author = Book.Author;
+            ExistedBook.Publisher = Book.Publisher;
+            ExistedBook.Title = Book.Title;
+            ExistedBook.YearOfPublication = Book.YearOfPublication;
+            await _libraryContext.SaveChangesAsync();
+            return ExistedBook;
+
+        }
+
+        public async Task Delete(Guid Id)
+        {
+            var ExistingBook = await _libraryContext.Books.FindAsync(Id);
+            _libraryContext.Books.Remove(ExistingBook);
+            await _libraryContext.SaveChangesAsync();
         }
     }
 }
