@@ -11,6 +11,7 @@ namespace Konyvtar_nyilvantarto.Validators
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage(NotNullEmptyWhiteMessage);
             RuleFor(x => x.YearOfPublication).LessThanOrEqualTo(DateTime.UtcNow.Year).WithMessage(LessThanOrEqualToMessage);
+            
         }
     }
 }
