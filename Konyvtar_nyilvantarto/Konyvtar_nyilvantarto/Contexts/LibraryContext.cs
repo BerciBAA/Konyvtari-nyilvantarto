@@ -14,7 +14,7 @@ namespace Konyvtar_nyilvantarto.Contexts
 
         public DbSet<LibraryMemberEntity> LibraryMembers { get; set; }
 
-        public DbSet<BorrowingDataEntity> borrowingData { get; set; }
+        public DbSet<BorrowingDataEntity> BorrowingData { get; set; }
 
 
       

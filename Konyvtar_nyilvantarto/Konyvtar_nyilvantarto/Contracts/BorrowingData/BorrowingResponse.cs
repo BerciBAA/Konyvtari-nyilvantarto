@@ -1,16 +1,10 @@
 ﻿using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
+namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
 {
-    public class BorrowingDataEntity
+    public class BorrowingResponse
     {
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid BorrowingId { get; set; }
-
         public virtual LibraryMemberEntity LibraryMembers { get; set; }
 
         public virtual BookEntity Book { get; set; }
@@ -18,7 +12,5 @@ namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
         public DateTime RentalTime { get; set; }
 
         public DateTime RetrievalLimitTime { get; set; }
-
-
     }
 }

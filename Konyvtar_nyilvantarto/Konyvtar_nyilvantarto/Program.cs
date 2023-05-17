@@ -4,6 +4,9 @@ using FluentValidation;
 using Konyvtar_nyilvantarto;
 using Konyvtar_nyilvantarto.Contexts;
 using Konyvtar_nyilvantarto.Contracts.Book;
+using Konyvtar_nyilvantarto.Contracts.BorrowingData;
+using Konyvtar_nyilvantarto.Services.BorrowingData.Repository;
+using Konyvtar_nyilvantarto.Services.BorrowingData.Service;
 using Konyvtar_nyilvantarto.Validators;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,10 +22,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
-builder.Services.AddScoped<IValidator<BookRequest>, CreateBookRequestValidator>();
+builder.Services.AddScoped<IBorrowingDataRepository, BorrowingDataRepository>();
+builder.Services.AddScoped<IBorrowingDataService, BorrowingDataService>();
+
+builder.Services.AddScoped<IValidator<BorrowingRequest>, BorrowingRequestValidator>();
+builder.Services.AddScoped<IValidator<BookRequest>, BookRequestValidator>();
+
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 

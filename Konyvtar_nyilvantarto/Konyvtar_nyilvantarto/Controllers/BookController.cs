@@ -35,7 +35,7 @@ namespace Konyvtar_nyilvantarto.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookResponse>>> Get() {
-            IEnumerable<BookDto> bookDtos = await _bookService.GetAll();
+            var bookDtos = await _bookService.GetAll();
             var result = _mapper.Map<IEnumerable<BookDto>, IEnumerable<BookResponse>>(bookDtos);
             return Ok(result);
         }
@@ -55,9 +55,6 @@ namespace Konyvtar_nyilvantarto.Controllers
             if (insertedBook is null) {
                 return Conflict();
             }
-
-            var result = _mapper.Map<BookDto, BookResponse>(insertedBook);
-
             return Created($"/book/{insertedBook.Id}",insertedBook);
         }
 

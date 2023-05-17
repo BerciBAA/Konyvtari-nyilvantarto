@@ -23,7 +23,7 @@ namespace Konyvtar_nyilvantarto
 
         public async Task<IEnumerable<BookDto>> GetAll()
         {
-            IEnumerable<BookEntity> bookEntities = await _bookRepository.GetAll();
+            var bookEntities = await _bookRepository.GetAll();
             return _mapper.Map<IEnumerable<BookEntity>, IEnumerable<BookDto>>(bookEntities);
         }
 

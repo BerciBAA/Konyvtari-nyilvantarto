@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Konyvtar_nyilvantarto.Services.Book.Model;
 
-namespace Konyvtar_nyilvantarto.MappingProfiles
+namespace Konyvtar_nyilvantarto.MappingProfiles.Book
 {
     public class BookDtoProfile : Profile
     {

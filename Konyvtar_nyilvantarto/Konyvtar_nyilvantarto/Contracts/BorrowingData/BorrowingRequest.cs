@@ -1,10 +1,10 @@
 ﻿using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
 
-namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
+namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
 {
-    public class BorrowingDataDto
+    public class BorrowingRequest
     {
-        public Guid BorrowingId { get; set; }
+      
 
         public virtual LibraryMemberEntity LibraryMembers { get; set; }
 
@@ -13,7 +13,6 @@ namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
         public DateTime RentalTime { get; set; }
 
         public DateTime RetrievalLimitTime { get; set; }
-
 
     }
 }
