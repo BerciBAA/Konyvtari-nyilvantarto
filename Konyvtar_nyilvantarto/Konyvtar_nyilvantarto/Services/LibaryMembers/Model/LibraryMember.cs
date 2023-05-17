@@ -1,13 +1,22 @@
-﻿namespace Konyvtar_nyilvantarto.Services.LibaryMembers.Model
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Konyvtar_nyilvantarto.Services.LibaryMembers.Model
 {
-    public class LibraryMember
+    public class LibraryMemberEntity
     {
-        private string name { get; set; }
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid MemberId { get; set; }
 
-        private string address { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        private string readingNumber { get; set; }
+        [Required]
+        public string Address { get; set; }
 
-        private string dateOfBirth { get; set; }
+        [Required]
+        public DateTime DateOfBirth { get; set; }
     }
 }

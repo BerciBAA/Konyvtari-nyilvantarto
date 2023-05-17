@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
+using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Contexts
 {
@@ -9,6 +11,14 @@ namespace Konyvtar_nyilvantarto.Contexts
 
         }
         public DbSet<BookEntity> Books { get; set; }
+
+        public DbSet<LibraryMemberEntity> LibraryMembers { get; set; }
+
+        public DbSet<BorrowingDataEntity> borrowingData { get; set; }
+
+
+      
+
 
     }
 }

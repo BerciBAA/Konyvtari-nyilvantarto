@@ -10,17 +10,18 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<LibraryContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
+    options.UseLazyLoadingProxies();
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddDbContext<LibraryContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
-});
+
 builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
