@@ -7,7 +7,7 @@ namespace Konyvtar_nyilvantarto.MappingProfiles
     public class CreateBookRequestProfile : Profile
     {
         public CreateBookRequestProfile() {
-            CreateMap<CreateBookRequest, BookDto>().ForMember(x => x.Id,opt=>opt.Ignore());
+            CreateMap<BookRequest, BookDto>().ForMember(x => x.Id,opt=>opt.Ignore());
         }
     }
 }

@@ -4,14 +4,14 @@ namespace Konyvtar_nyilvantarto
 {
     public interface IBookService
     {
-        Task<BookEntity> Get(Guid Id);
+        Task<BookDto> Get(Guid id);
 
-        Task<IEnumerable<BookEntity>> GetAll();
+        Task<IEnumerable<BookDto>> GetAll();
 
-        Task<BookDto> Insert(BookDto Book);
+        Task<BookDto> Insert(BookDto book);
 
-        Task<BookEntity> Update(BookEntity Book);
+        Task<BookDto> Update(Guid id, BookDto book);
 
-        Task Delete(Guid Id);
+        Task<bool> Delete(Guid id);
     }
 }

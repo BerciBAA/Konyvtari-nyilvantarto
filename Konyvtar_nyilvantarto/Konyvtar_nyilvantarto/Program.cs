@@ -21,7 +21,7 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
 });
-builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
+builder.Services.AddScoped<IValidator<BookRequest>, CreateBookRequestValidator>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
