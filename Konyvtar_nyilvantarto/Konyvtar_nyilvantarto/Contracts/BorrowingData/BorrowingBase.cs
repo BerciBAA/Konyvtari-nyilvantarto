@@ -4,9 +4,9 @@ using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
 
 namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
 {
-    public class BorrowingResponse : BorrowingBase
+    public class BorrowingBase
     {
-        public Guid BorrowingId { get; set; }
+
         public virtual LibraryMemberEntity LibraryMembers { get; set; }
 
         public virtual BookEntity Book { get; set; }
@@ -14,5 +14,6 @@ namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
         public DateTime RentalTime { get; set; }
 
         public DateTime RetrievalLimitTime { get; set; }
+
     }
 }
