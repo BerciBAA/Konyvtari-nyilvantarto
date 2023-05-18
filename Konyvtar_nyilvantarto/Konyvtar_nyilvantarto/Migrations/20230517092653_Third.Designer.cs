@@ -4,6 +4,7 @@ using Konyvtar_nyilvantarto.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Konyvtar_nyilvantarto.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20230517092653_Third")]
+    partial class Third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,31 +47,25 @@ namespace Konyvtar_nyilvantarto.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibraryMembers.Model.LibraryMemberEntity", b =>
+            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
                 {
-                    b.Property<Guid>("MemberId")
+                    b.Property<Guid>("BorrowingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid?>("LibraryMembersMemberId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("BorrowingId");
 
-                    b.HasKey("MemberId");
-
-                    b.ToTable("LibraryMembers");
                     b.HasIndex("BookId");
 
                     b.HasIndex("LibraryMembersMemberId");
 
-                    b.ToTable("BorrowingData");
+                    b.ToTable("borrowingData");
                 });
 
             modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", b =>

@@ -13,19 +13,18 @@ namespace Konyvtar_nyilvantarto
             _mapper = mapper;
         }
 
-        public async Task Delete(Guid Id)
+        
+
+        public async Task<BookDto> Get(Guid id)
         {
-            await _bookRepository.Delete(Id);
+            var existedBook = await _bookRepository.Get(id);
+            return _mapper.Map<BookEntity, BookDto>(existedBook);
         }
 
-        public async Task<BookEntity> Get(Guid Id)
+        public async Task<IEnumerable<BookDto>> GetAll()
         {
-            return await _bookRepository.Get(Id);
-        }
-
-        public async Task<IEnumerable<BookEntity>> GetAll()
-        {
-            return await _bookRepository.GetAll();
+            var bookEntities = await _bookRepository.GetAll();
+            return _mapper.Map<IEnumerable<BookEntity>, IEnumerable<BookDto>>(bookEntities);
         }
 
         public async Task<BookDto> Insert(BookDto book)
@@ -36,9 +35,25 @@ namespace Konyvtar_nyilvantarto
             return _mapper.Map<BookEntity, BookDto>(result);
         }
 
-        public async Task<BookEntity> Update(BookEntity Book)
+        public async Task<BookDto> Update(Guid id, BookDto book)
         {
-            return await _bookRepository.Update(Book);
+            var bookEntity = _mapper.Map<BookDto, BookEntity>(book);
+            var existedBook = await _bookRepository.Get(id);
+            if (existedBook is null) {
+                return _mapper.Map<BookEntity, BookDto>(existedBook);
+            }
+            var result = await _bookRepository.Update(id, bookEntity);
+            return _mapper.Map<BookEntity, BookDto>(result);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var existedBook = await _bookRepository.Get(id);
+            if (existedBook is null) { 
+                return false;
+            }
+            await _bookRepository.Delete(existedBook);
+            return true;
         }
     }
 }

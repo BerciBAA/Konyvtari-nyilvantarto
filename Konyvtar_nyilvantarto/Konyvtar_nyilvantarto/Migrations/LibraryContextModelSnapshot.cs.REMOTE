@@ -65,48 +65,6 @@ namespace Konyvtar_nyilvantarto.Migrations
                     b.HasKey("MemberId");
 
                     b.ToTable("LibraryMembers");
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("LibraryMembersMemberId");
-
-                    b.ToTable("BorrowingData");
-                });
-
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", b =>
-                {
-                    b.Property<Guid>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MemberId");
-
-                    b.ToTable("LibraryMembers");
-                });
-
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
-                {
-                    b.HasOne("Konyvtar_nyilvantarto.BookEntity", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId");
-
-                    b.HasOne("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", "LibraryMembers")
-                        .WithMany()
-                        .HasForeignKey("LibraryMembersMemberId");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("LibraryMembers");
                 });
 #pragma warning restore 612, 618
         }

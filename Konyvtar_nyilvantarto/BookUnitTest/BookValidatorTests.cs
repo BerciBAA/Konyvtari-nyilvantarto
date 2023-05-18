@@ -6,11 +6,11 @@ namespace BookUnitTest
 {
     public class BookValidatorTests
     {
-        private readonly CreateBookRequestValidator _validator;
+        private readonly BookRequestValidator _validator;
 
         public BookValidatorTests()
         {
-            _validator = new CreateBookRequestValidator();
+            _validator = new BookRequestValidator();
         }
         [Theory]
         [InlineData("title")]
@@ -19,7 +19,7 @@ namespace BookUnitTest
         [InlineData("title3")]
         public void ValidTitle_ShouldNotThrowException(string testValue)
         {
-            var createBookRequest = new CreateBookRequest {
+            var createBookRequest = new BookRequest {
                 Title = testValue
 
             };
@@ -35,13 +35,13 @@ namespace BookUnitTest
         [InlineData(" ")]
         public void InvalidTitle_ShouldThrowException(string testValue)
         {
-            var createBookRequest = new CreateBookRequest
+            var createBookRequest = new BookRequest
             {
                 Title = testValue
 
             };
             var result = _validator.TestValidate(createBookRequest);
-            result.ShouldHaveValidationErrorFor(x => x.Title).WithErrorMessage(CreateBookRequestValidator.NotNullEmptyWhiteMessage.Replace("{PropertyName}", nameof(CreateBookRequest.Title)));
+            result.ShouldHaveValidationErrorFor(x => x.Title).WithErrorMessage(BookRequestValidator.NotNullEmptyWhiteMessage.Replace("{PropertyName}", nameof(BookRequest.Title)));
 
         }
     }

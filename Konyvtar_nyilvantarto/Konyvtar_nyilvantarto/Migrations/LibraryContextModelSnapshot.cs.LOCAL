@@ -45,26 +45,26 @@ namespace Konyvtar_nyilvantarto.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibraryMembers.Model.LibraryMemberEntity", b =>
+            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
                 {
-                    b.Property<Guid>("MemberId")
+                    b.Property<Guid>("BorrowingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<Guid?>("LibraryMembersMemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("RentalTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("RetrievalLimitTime")
+                        .HasColumnType("datetime2");
 
-                    b.HasKey("MemberId");
+                    b.HasKey("BorrowingId");
 
-                    b.ToTable("LibraryMembers");
                     b.HasIndex("BookId");
 
                     b.HasIndex("LibraryMembersMemberId");

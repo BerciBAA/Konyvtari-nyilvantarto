@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 ﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
 using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+=======
+﻿using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+>>>>>>> origin/feature/LibraryMemberImplementaion
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Contexts
@@ -14,10 +17,15 @@ namespace Konyvtar_nyilvantarto.Contexts
         public DbSet<BookEntity> Books { get; set; }
 
         public DbSet<LibraryMemberEntity> LibraryMembers { get; set; }
+<<<<<<< HEAD
 
         public DbSet<BorrowingDataEntity> BorrowingData { get; set; }
 
 
       
+
+
+=======
+>>>>>>> origin/feature/LibraryMemberImplementaion
     }
 }
