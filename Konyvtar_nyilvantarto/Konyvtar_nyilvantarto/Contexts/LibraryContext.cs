@@ -20,5 +20,6 @@ namespace Konyvtar_nyilvantarto.Contexts
       
 
 
+        public DbSet<LibraryMemberEntity> LibraryMembers { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Konyvtar_nyilvantarto.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Konyvtar_nyilvantarto.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20230517234518_AddLibraryMember")]
+    partial class AddLibraryMember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,48 +67,6 @@ namespace Konyvtar_nyilvantarto.Migrations
                     b.HasKey("MemberId");
 
                     b.ToTable("LibraryMembers");
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("LibraryMembersMemberId");
-
-                    b.ToTable("BorrowingData");
-                });
-
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", b =>
-                {
-                    b.Property<Guid>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MemberId");
-
-                    b.ToTable("LibraryMembers");
-                });
-
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
-                {
-                    b.HasOne("Konyvtar_nyilvantarto.BookEntity", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId");
-
-                    b.HasOne("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", "LibraryMembers")
-                        .WithMany()
-                        .HasForeignKey("LibraryMembersMemberId");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("LibraryMembers");
                 });
 #pragma warning restore 612, 618
         }

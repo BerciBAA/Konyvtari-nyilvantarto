@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Konyvtar_nyilvantarto", "Konyvtar_nyilvantarto\Konyvtar_nyilvantarto.csproj", "{38F31F64-6874-4B59-9BCA-922F7E5F0305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookUnitTest", "BookUnitTest\BookUnitTest.csproj", "{18E57293-3205-43EA-BC9F-B1506F1F8EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookUnitTest", "BookUnitTest\BookUnitTest.csproj", "{18E57293-3205-43EA-BC9F-B1506F1F8EBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryMemberTests", "LibraryMemberTests\LibraryMemberTests.csproj", "{7F279E7A-5093-492C-B187-76EC3747665D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{18E57293-3205-43EA-BC9F-B1506F1F8EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18E57293-3205-43EA-BC9F-B1506F1F8EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18E57293-3205-43EA-BC9F-B1506F1F8EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F279E7A-5093-492C-B187-76EC3747665D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F279E7A-5093-492C-B187-76EC3747665D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F279E7A-5093-492C-B187-76EC3747665D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F279E7A-5093-492C-B187-76EC3747665D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
