@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Model
+namespace LibaryRegister.Contracts.LibraryMember
 {
     public class LibraryMemberEntity
     {

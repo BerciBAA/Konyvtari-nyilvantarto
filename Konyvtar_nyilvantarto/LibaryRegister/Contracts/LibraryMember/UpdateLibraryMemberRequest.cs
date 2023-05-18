@@ -1,4 +1,4 @@
-﻿namespace Konyvtar_nyilvantarto.Contracts.LibraryMember
+﻿namespace LibaryRegister.Contracts.LibraryMember
 {
     public sealed class UpdateLibraryMemberRequest
     {

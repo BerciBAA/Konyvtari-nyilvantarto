@@ -1,4 +1,5 @@
-﻿@page "/CustomerClient"
+﻿@page "/CustomerClient/{memberId}"
+@using LibaryRegister.Contracts.Book
 @inject HttpClient HttpClient;
 
 
@@ -6,40 +7,45 @@
 {
 	<h4>Loading...</h4>
 }
-
 else
 {
 	<h4>Book list</h4>
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<th>Id</th>
 				<th>Title</th>
 				<th>Author</th>
 				<th>Publisher</th>
 				<th>YearOfPublication</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var book in books)
 			{
 				<tr>
-					<td>@book.Id</td>
 					<td>@book.Title</td>
 					<td>@book.Author</td>
 					<td>@book.Publisher</td>
 					<td>@book.YearOfPublication</td>
+					<td><a href="book/@book.Id.ToString()" class="btn btn-primary">Details</a></td>
 				</tr>
 			}
-			
 		 </tbody>
-
 	 </table>
 
+}
+@if(MemberId is null){
+	<p>Loading...</p>
+}else{
+	<p>@MemberId</p>
 }
 
 
 @code {
+
+	[Parameter]
+	public string? MemberId { get; set; }
 
 	private IEnumerable<BookEntity>? books { get; set; }
 
@@ -48,8 +54,4 @@ else
 		books = await HttpClient.GetFromJsonAsync<IEnumerable<BookEntity>>("Book");
 		
 	}
-	
-
-
-	
 }

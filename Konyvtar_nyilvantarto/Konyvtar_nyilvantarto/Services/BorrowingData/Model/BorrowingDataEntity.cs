@@ -1,5 +1,5 @@
-﻿
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+﻿using LibaryRegister.Contracts.Book;
+using LibaryRegister.Contracts.LibraryMember;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

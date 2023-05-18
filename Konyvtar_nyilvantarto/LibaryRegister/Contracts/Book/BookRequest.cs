@@ -1,4 +1,4 @@
-﻿namespace Konyvtar_nyilvantarto.Contracts.Book
+﻿namespace LibaryRegister.Contracts.Book
 {
     public class BookRequest
     {

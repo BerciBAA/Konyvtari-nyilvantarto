@@ -1,14 +1,9 @@
 ﻿
-<<<<<<< HEAD
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
-=======
->>>>>>> feature/blazorImp
-
 namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
 {
     public class BorrowingResponse : BorrowingBase
     {
         public Guid BorrowingId { get; set; }
-
+       
     }
 }

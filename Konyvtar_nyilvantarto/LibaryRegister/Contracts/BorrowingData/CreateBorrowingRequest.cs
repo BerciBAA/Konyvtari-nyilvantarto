@@ -1,6 +1,7 @@
-﻿using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+﻿using LibaryRegister.Contracts.Book;
+using LibaryRegister.Contracts.LibraryMember;
 
-namespace Konyvtar_nyilvantarto.Contracts.BorrowingData
+namespace LibaryRegister.Contracts.BorrowingData
 {
     public class CreateBorrowingRequest
     {

@@ -1,0 +1,31 @@
+﻿@page "/"
+@using Konyvtar_nyilvantarto.Blazor.Services
+@using Konyvtar_nyilvantarto.Contracts.LibraryMember
+@inject ILibraryMemberService _libaryMemberService
+@inject NavigationManager _NavigationManager
+
+<h3>Please enter your name!</h3>
+<EditForm Model="@Username" OnValidSubmit="@HandleUsername">
+		<div class="mb-3">
+			<label class="form-label">Username:</label>
+			<InputText @bind-Value="@Username" class="form-control"></InputText>
+		</div>
+		<button type="submit" class="btn bg-primary">Query books</button>
+</EditForm>
+
+@code {
+	public string? Username { get; set; } = "";
+
+	public async Task HandleUsername()
+	{
+		if (Username is not null)
+		{
+			var result = await _libaryMemberService.GetLibraryMemberByNameAsync(Username);
+			if (result is not null)
+			{
+				_NavigationManager.NavigateTo($"CustomerClient/{result.MemberId}");
+			}
+		}
+	}
+	
+}

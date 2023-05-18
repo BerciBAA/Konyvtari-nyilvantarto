@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Repository;
+using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Service
 {

@@ -1,5 +1,6 @@
 ﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.Book;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Contexts

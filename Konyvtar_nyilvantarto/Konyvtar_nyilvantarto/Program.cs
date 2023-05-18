@@ -6,7 +6,6 @@ using Konyvtar_nyilvantarto.Contexts;
 using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Repository;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
-using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Contracts.BorrowingData;
 using Konyvtar_nyilvantarto.Services.BorrowingData.Repository;
 using Konyvtar_nyilvantarto.Services.BorrowingData.Service;
@@ -16,6 +15,8 @@ using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Models;
 using Konyvtar_nyilvantarto.Validators.Common;
 using System;
+using LibaryRegister.Contracts.LibraryMember;
+using LibaryRegister.Contracts.Book;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +62,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<LibraryContext>();
 
+    dbContext.Database.Migrate();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

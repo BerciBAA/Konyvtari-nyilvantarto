@@ -1,0 +1,13 @@
+﻿@page "/book/{id}"
+
+<h3>Book</h3>
+@if (Id is not null)
+{
+	<p>@Id</p>
+}
+
+
+@code {
+	[Parameter]
+	public string? Id { get; set; }
+}

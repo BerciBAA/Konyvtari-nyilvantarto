@@ -4,6 +4,7 @@ using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Models;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Konyvtar_nyilvantarto.Controllers

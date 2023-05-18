@@ -2,7 +2,7 @@
 {
     public sealed class LibraryMemberResponse : LibraryMemberContractBase
     {
-        public Guid Id { get; set; }
+        public Guid MemberId { get; set; }
 
     }
 }

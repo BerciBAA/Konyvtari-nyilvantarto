@@ -1,5 +1,5 @@
 ﻿using Konyvtar_nyilvantarto.Contexts;
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository

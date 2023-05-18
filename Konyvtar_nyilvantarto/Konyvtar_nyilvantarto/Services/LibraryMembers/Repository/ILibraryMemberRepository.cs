@@ -1,4 +1,4 @@
-﻿using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+﻿using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
 {

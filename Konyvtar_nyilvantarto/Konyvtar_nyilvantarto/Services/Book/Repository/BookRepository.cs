@@ -1,4 +1,5 @@
 ﻿using Konyvtar_nyilvantarto.Contexts;
+using LibaryRegister.Contracts.Book;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Konyvtar_nyilvantarto
+namespace LibaryRegister.Contracts.Book
 {
     public class BookEntity
     {
