@@ -1,4 +1,4 @@
-﻿using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
+﻿
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

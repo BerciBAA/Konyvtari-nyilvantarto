@@ -8,6 +8,7 @@ namespace Konyvtar_nyilvantarto.MappingProfiles.LibraryMember
         public LibaryMemberDtoProfile()
         {
             CreateMap<LibraryMemberDto,LibraryMemberEntity>();
+            CreateMap<LibraryMemberEntity, LibraryMemberDto>();
         }
     }
 }

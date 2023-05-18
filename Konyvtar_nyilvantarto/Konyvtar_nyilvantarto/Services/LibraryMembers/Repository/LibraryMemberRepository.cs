@@ -57,5 +57,9 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
 
             return result > 0;
         }
+        public async Task<LibraryMemberEntity> GetLibraryMemberByName(string name)
+        {
+            return await _libraryContext.LibraryMembers.FirstOrDefaultAsync(x => x.Name == name);
+        }
     }
 }

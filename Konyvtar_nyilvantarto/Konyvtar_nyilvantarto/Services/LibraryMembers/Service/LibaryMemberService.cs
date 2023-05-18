@@ -49,5 +49,11 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Service
             var libraryMemberEntity = _mapper.Map<LibraryMemberDto, LibraryMemberEntity>(libraryMember);
             return _repository.UpdateLibraryMember(libraryMemberEntity);
         }
+        public async Task<LibraryMemberDto> GetLibraryMemberByName(string name)
+        {
+            var libraryMemberEntity = await _repository.GetLibraryMemberByName(name);
+
+            return _mapper.Map<LibraryMemberEntity, LibraryMemberDto>(libraryMemberEntity);
+        }
     }
 }

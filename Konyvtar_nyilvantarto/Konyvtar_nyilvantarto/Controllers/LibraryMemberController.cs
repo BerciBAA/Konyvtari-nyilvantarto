@@ -107,5 +107,16 @@ namespace Konyvtar_nyilvantarto.Controllers
 
             return result ? Ok() : BadRequest();
         }
+
+        [HttpGet("/findByName/{name}")]
+        public async Task<IActionResult> GetLibraryMember(string name)
+        {
+           
+            var libraryMemberDto = await _libaryMemberService.GetLibraryMemberByName(name);
+
+            var result = _mapper.Map<LibraryMemberDto, LibraryMemberResponse>(libraryMemberDto);
+
+            return result != null ? Ok(result) : NotFound();
+        }
     }
 }
