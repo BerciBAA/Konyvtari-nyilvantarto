@@ -9,6 +9,12 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Service
         private readonly ILibraryMemberRepository _repository;
         private readonly IMapper _mapper;
 
+        public LibaryMemberService(ILibraryMemberRepository libaryMemberRepository, IMapper mapper)
+        {
+            _repository = libaryMemberRepository;
+            _mapper = mapper;
+        }
+
         public async Task<bool> AddLibraryMember(LibraryMemberDto libraryMember)
         {
             var libraryMemberEntity = _mapper.Map<LibraryMemberDto, LibraryMemberEntity>(libraryMember);

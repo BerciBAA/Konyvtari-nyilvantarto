@@ -5,9 +5,6 @@ using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Repository;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
 using Konyvtar_nyilvantarto.Contracts.Book;
-using Konyvtar_nyilvantarto.Contracts.BorrowingData;
-using Konyvtar_nyilvantarto.Services.BorrowingData.Repository;
-using Konyvtar_nyilvantarto.Services.BorrowingData.Service;
 using Konyvtar_nyilvantarto.Validators;
 using Microsoft.EntityFrameworkCore;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators;
@@ -23,11 +20,7 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 });
 
 // Add services to the container.
-builder.Services.AddDbContext<LibraryContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
-    options.UseLazyLoadingProxies();
-});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -36,14 +29,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
-<<<<<<< HEAD
-builder.Services.AddScoped<IBorrowingDataRepository, BorrowingDataRepository>();
-builder.Services.AddScoped<IBorrowingDataService, BorrowingDataService>();
-
-builder.Services.AddScoped<IValidator<BorrowingRequest>, BorrowingRequestValidator>();
-builder.Services.AddScoped<IValidator<BookRequest>, BookRequestValidator>();
-
-=======
 builder.Services.AddScoped<ILibaryMemberService, LibaryMemberService>();
 builder.Services.AddScoped<ILibraryMemberRepository, LibraryMemberRepository>();
 
@@ -53,7 +38,6 @@ builder.Services.AddScoped<IValidator<QueryParameterValidatorObject>, LibraryMem
 builder.Services.AddScoped<IValidator<UpdateLibraryMemberRequest>, UpdateLibraryMemberRequestValidator>();
 
 builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
->>>>>>> origin/feature/LibraryMemberImplementaion
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

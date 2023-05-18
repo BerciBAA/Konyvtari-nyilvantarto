@@ -9,20 +9,7 @@ namespace Konyvtar_nyilvantarto.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "LibraryMembers",
-                columns: table => new
-                {
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LibraryMembers", x => x.MemberId);
-                });
-
+            
             migrationBuilder.CreateTable(
                 name: "borrowingData",
                 columns: table => new
@@ -39,11 +26,7 @@ namespace Konyvtar_nyilvantarto.Migrations
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_borrowingData_LibraryMembers_LibraryMembersMemberId",
-                        column: x => x.LibraryMembersMemberId,
-                        principalTable: "LibraryMembers",
-                        principalColumn: "MemberId");
+                  
                 });
 
             migrationBuilder.CreateIndex(
@@ -62,8 +45,6 @@ namespace Konyvtar_nyilvantarto.Migrations
             migrationBuilder.DropTable(
                 name: "borrowingData");
 
-            migrationBuilder.DropTable(
-                name: "LibraryMembers");
         }
     }
 }
