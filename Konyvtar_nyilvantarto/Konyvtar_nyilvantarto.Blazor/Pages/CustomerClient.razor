@@ -1,8 +1,55 @@
 ﻿@page "/CustomerClient"
-@inject HttpClient httpClient;
+@inject HttpClient HttpClient;
 
-<h3>CustomerClient</h3>
+
+@if (books is null)
+{
+	<h4>Loading...</h4>
+}
+
+else
+{
+	<h4>Book list</h4>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Publisher</th>
+				<th>YearOfPublication</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var book in books)
+			{
+				<tr>
+					<td>@book.Id</td>
+					<td>@book.Title</td>
+					<td>@book.Author</td>
+					<td>@book.Publisher</td>
+					<td>@book.YearOfPublication</td>
+				</tr>
+			}
+			
+		 </tbody>
+
+	 </table>
+
+}
+
 
 @code {
 
+	private IEnumerable<BookEntity>? books { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		books = await HttpClient.GetFromJsonAsync<IEnumerable<BookEntity>>("Book");
+		
+	}
+	
+
+
+	
 }

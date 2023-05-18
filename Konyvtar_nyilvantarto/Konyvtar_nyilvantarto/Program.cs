@@ -53,7 +53,7 @@ builder.Services.AddScoped<IValidator<BookRequest>, BookRequestValidator>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
-
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
