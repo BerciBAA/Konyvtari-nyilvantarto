@@ -10,6 +10,8 @@ using Konyvtar_nyilvantarto.Contracts.BorrowingData;
 using Konyvtar_nyilvantarto.Validators;
 using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Validators.Common;
+using LibaryRegister.Contracts.LibraryMember;
+using LibaryRegister.Contracts.Book;
 
 namespace Konyvtar_nyilvantarto.Extensions
 {

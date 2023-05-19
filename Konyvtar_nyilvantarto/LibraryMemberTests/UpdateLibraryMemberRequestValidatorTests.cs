@@ -2,6 +2,7 @@
 using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Helpers;
+using LibaryRegister.Contracts.LibraryMember;
 
 namespace LibraryMemberTests
 {
