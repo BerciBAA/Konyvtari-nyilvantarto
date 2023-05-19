@@ -1,0 +1,64 @@
+﻿@page "/CustomerClient/{memberId}"
+@using Konyvtar_nyilvantarto.Contracts.Book
+@using LibaryRegister.Contracts.Book
+@inject HttpClient HttpClient
+@inject NavigationManager _navigationManager
+
+
+@if (books is null)
+{
+	<h4>Loading...</h4>
+}
+else
+{
+	<h4>Book list</h4>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Publisher</th>
+				<th>YearOfPublication</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var book in books)
+			{
+				<tr>
+					<td>@book.Title</td>
+					<td>@book.Author</td>
+					<td>@book.Publisher</td>
+					<td>@book.YearOfPublication</td>
+					<td><a href="book/@book.Id.ToString()" class="btn btn-primary">Details</a></td>
+				</tr>
+			}
+		 </tbody>
+	 </table>
+	 <button @onclick="@Borrowing" class="btn btn-primary">My borrowing</button>
+	 <p>@MemberId</p>
+}
+@if(er != ""){
+	<p>@er</p>
+}
+@code {
+
+	[Parameter]
+	public string? MemberId { get; set; }
+	 public string er = "";
+	private IEnumerable<BookResponse>? books { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			books = await HttpClient.GetFromJsonAsync<IEnumerable<BookResponse>>("Book");
+		}catch(HttpRequestException){
+			er = "no books found";
+		}
+	}
+	public void Borrowing()
+	{
+		_navigationManager.NavigateTo($"/BorrowingBook/{MemberId}");
+	}
+}

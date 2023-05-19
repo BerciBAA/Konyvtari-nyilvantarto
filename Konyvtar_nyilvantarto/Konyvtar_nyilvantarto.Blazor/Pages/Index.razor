@@ -1,0 +1,43 @@
+﻿@page "/"
+@using Konyvtar_nyilvantarto.Blazor.Services
+@using Konyvtar_nyilvantarto.Contracts.LibraryMember
+@using LibaryRegister.Contracts.BorrowingData
+@inject ILibraryMemberService _libaryMemberService
+@inject NavigationManager _NavigationManager
+
+<h3>Please enter your name!</h3>
+<EditForm Model="@UsernameRequest" OnValidSubmit="@HandleUsername">
+
+		<div class="mb-3">
+			<label class="form-label">Username:</label>
+			<InputText @bind-Value="@UsernameRequest.Username" class="form-control"></InputText>
+		</div>
+		<button type="submit" class="btn btn-primary">Query books</button>
+</EditForm>
+@if(er != ""){
+	<p>@er</p>
+}
+
+@code {
+    public UsernameRequest? UsernameRequest { get; set; } = new();
+    public string er = "";
+    public async Task HandleUsername()
+    {
+        if (UsernameRequest is not null)
+        {	try
+            {
+                var result = await _libaryMemberService.GetLibraryMemberByNameAsync(UsernameRequest.Username);
+                if (result is not null)
+                {
+                    _NavigationManager.NavigateTo($"CustomerClient/{result.MemberId}");
+                }
+            } catch (HttpRequestException)
+            {
+                er = "No such username!";
+			}
+
+
+		}
+	}
+	
+}

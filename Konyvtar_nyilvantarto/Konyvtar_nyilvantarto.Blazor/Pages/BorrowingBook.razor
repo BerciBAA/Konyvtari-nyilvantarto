@@ -1,0 +1,67 @@
+﻿@page "/BorrowingBook/{memberId}"
+@using Konyvtar_nyilvantarto.Contracts.BorrowingData
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Borrowing book</h3>
+@if (borrowings is not null && er == "")
+{
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>RentalTime</th>
+				<th>RetrievalLimitTime</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var borrowing in borrowings)
+			{
+				<tr>
+					<td>@borrowing.Book.Title</td>
+					<td>@borrowing.RentalTime</td>
+					<td>@borrowing.RetrievalLimitTime</td>
+					<td @onclick="@Details">Details</td>
+				</tr>
+			}
+		 </tbody>
+	</table>
+	<p>@memberId</p>
+}
+else
+{
+	<p>@memberId</p>
+	<p>@er</p>
+	
+}
+
+@code {
+
+	[Parameter]
+	public string? memberId { get; set; }
+
+	public string er = "";
+
+	IEnumerable<BorrowingResponse>? borrowings { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			var result = await HttpClient.GetFromJsonAsync<IEnumerable<BorrowingResponse>>($"/BorrowingDataFindByMemberId/{memberId}");
+			if (result is not null)
+			{
+				result = result.OrderBy(x => x.RetrievalLimitTime).ToList();
+				borrowings = result;
+			}
+		}catch(HttpRequestException){
+			er = "You have no books to borrow!";
+		}
+	}
+	public void Details()
+	{
+		
+	}
+
+}

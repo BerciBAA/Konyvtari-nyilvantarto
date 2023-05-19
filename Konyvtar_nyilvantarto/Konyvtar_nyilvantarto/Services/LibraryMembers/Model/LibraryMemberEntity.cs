@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Model
+namespace LibaryRegister.Contracts.LibraryMember
 {
     public class LibraryMemberEntity
     {
@@ -18,5 +19,9 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Model
 
         [Required]
         public DateTime DateOfBirth { get; set; }
-    }
+
+		public virtual BorrowingDataEntity BorrowingData { get; set; }
+
+
+	}
 }

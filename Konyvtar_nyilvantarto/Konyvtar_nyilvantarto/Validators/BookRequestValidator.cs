@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Konyvtar_nyilvantarto.Contracts.Book;
+using LibaryRegister.Contracts.Book;
 
 namespace Konyvtar_nyilvantarto.Validators
 {

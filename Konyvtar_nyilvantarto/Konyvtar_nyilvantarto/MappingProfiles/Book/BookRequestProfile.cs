@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Services.Book.Model;
+using LibaryRegister.Contracts.Book;
 
 namespace Konyvtar_nyilvantarto.MappingProfiles.Book
 {

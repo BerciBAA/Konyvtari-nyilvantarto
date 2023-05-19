@@ -1,6 +1,6 @@
 ﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
-using Konyvtar_nyilvantarto.Services.LibaryMembers.Model;
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.Book;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Contexts
@@ -17,7 +17,20 @@ namespace Konyvtar_nyilvantarto.Contexts
 
         public DbSet<BorrowingDataEntity> BorrowingData { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
+            modelBuilder.Entity<LibraryMemberEntity>()
+                .HasOne(e => e.BorrowingData)
+                .WithOne(e => e.LibraryMembers)
+                .HasForeignKey<BorrowingDataEntity>(e=>e.BorrowingDataLibraryMembersFK);
+
+            modelBuilder.Entity<BookEntity>()
+               .HasOne(e => e.BorrowingData)
+               .WithOne(e => e.Book)
+               .HasForeignKey<BorrowingDataEntity>(e => e.BorrowingDataBookEntityFK);
+
+            
+        }
       
     }
 }

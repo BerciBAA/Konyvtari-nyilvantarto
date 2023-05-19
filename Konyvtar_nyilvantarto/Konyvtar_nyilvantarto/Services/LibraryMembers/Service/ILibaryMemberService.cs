@@ -13,5 +13,7 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Service
         Task<bool> DeleteLibraryMemberById(Guid id);
 
         Task<bool> UpdateLibraryMember(LibraryMemberDto libraryMember);
+
+        Task<LibraryMemberDto> GetLibraryMemberByName(string name);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Konyvtar_nyilvantarto.Contexts;
+using LibaryRegister.Contracts.Book;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto
@@ -14,7 +15,7 @@ namespace Konyvtar_nyilvantarto
 
         public async Task<BookEntity> Get(Guid id)
         {
-            return await _libraryContext.Books.FindAsync(id);
+            return await _libraryContext.Books.FirstOrDefaultAsync(x => x.Id == id); 
         }
 
         public async Task<IEnumerable<BookEntity>> GetAll()

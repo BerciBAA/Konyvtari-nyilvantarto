@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.MappingProfiles.LibraryMember
 {
@@ -8,6 +9,7 @@ namespace Konyvtar_nyilvantarto.MappingProfiles.LibraryMember
         public LibaryMemberDtoProfile()
         {
             CreateMap<LibraryMemberDto,LibraryMemberEntity>();
+            CreateMap<LibraryMemberEntity, LibraryMemberDto>();
         }
     }
 }
