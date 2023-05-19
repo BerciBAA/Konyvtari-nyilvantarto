@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Konyvtar_nyilvantarto.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20230518211036_NewInit")]
+    [Migration("20230519171716_NewInit")]
     partial class NewInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
