@@ -6,7 +6,7 @@ namespace Konyvtar_nyilvantarto.Validators.LibraryMemberValidators
 {
     public class UpdateLibraryMemberRequestValidator : AbstractValidator<UpdateLibraryMemberRequest>
     {
-        internal const string IdErrorMessage = "Invalid Guid ID.";
+        public string IdErrorMessage = "Invalid Guid ID.";
 
         public UpdateLibraryMemberRequestValidator()
         {
@@ -22,8 +22,8 @@ namespace Konyvtar_nyilvantarto.Validators.LibraryMemberValidators
                 .Must(ValidatorHelper.IsAddressValid)
                 .WithMessage(ValidatorHelper.InvalidStringErrorMessage);
 
-            RuleFor(x => x.DateOfBirth.Year)
-                .LessThanOrEqualTo(DateTime.UtcNow.Year - ValidatorHelper.LowestAllowedAge)
+            RuleFor(x => x.DateOfBirth)
+                .Must(x => x.Year <= DateTime.UtcNow.Year - ValidatorHelper.LowestAllowedAge)
                 .WithMessage(ValidatorHelper.MemberMustBeOlderThanLowestAllowedAge());
         }
     }

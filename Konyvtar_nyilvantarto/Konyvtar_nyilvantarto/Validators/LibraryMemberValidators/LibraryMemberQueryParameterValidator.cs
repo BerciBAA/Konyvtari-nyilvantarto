@@ -5,7 +5,7 @@ namespace Konyvtar_nyilvantarto.Validators.LibraryMemberValidators
 {
     public class LibraryMemberQueryParameterValidator : AbstractValidator<QueryParameterValidatorObject>
     {
-        internal const string IntegerErrorMessage = "{PropertyName} is invalid.";
+        public string IntegerErrorMessage = "{PropertyName} is invalid.";
 
         public LibraryMemberQueryParameterValidator()
         {
@@ -14,7 +14,7 @@ namespace Konyvtar_nyilvantarto.Validators.LibraryMemberValidators
                 .WithMessage(IntegerErrorMessage);
 
             RuleFor(x => x.Size)
-                .GreaterThan(1)
+                .GreaterThan(0)
                 .WithMessage(IntegerErrorMessage);
         }
     }

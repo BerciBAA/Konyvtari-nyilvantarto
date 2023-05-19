@@ -60,6 +60,13 @@ namespace LibraryMemberTests
         [InlineData("")]
         [InlineData(" ")]
         [InlineData("           ")]
+        [InlineData("Name!")]
+        [InlineData("Name?")]
+        [InlineData("Firstname-Lastname")]
+        [InlineData("Firstname_Lastname")]
+        [InlineData("Some:text")]
+        [InlineData("#Name#")]
+        [InlineData("name;")]
         public void Invalid_Name_Shoud_Have_Error(string name)
         {
             var request = new CreateLibraryMemberRequest { Name = name };
