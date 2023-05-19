@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Helpers;
+using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.Validators.LibraryMemberValidators
 {

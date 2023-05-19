@@ -1,4 +1,4 @@
-﻿using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+﻿using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
 {
@@ -9,5 +9,6 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
         IEnumerable<LibraryMemberEntity> GetAllLibraryMemberByPage(int page, int size);
         Task<bool> DeleteLibraryMemberById(Guid id);
         Task<bool> UpdateLibraryMember(LibraryMemberEntity libraryMemberEntity);
+        Task<LibraryMemberEntity> GetLibraryMemberByName(string name);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Konyvtar_nyilvantarto.Contexts;
-using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
@@ -56,6 +56,10 @@ namespace Konyvtar_nyilvantarto.Services.LibraryMembers.Repository
             var result = await _libraryContext.SaveChangesAsync();
 
             return result > 0;
+        }
+        public async Task<LibraryMemberEntity> GetLibraryMemberByName(string name)
+        {
+            return await _libraryContext.LibraryMembers.FirstOrDefaultAsync(x => x.Name == name);
         }
     }
 }

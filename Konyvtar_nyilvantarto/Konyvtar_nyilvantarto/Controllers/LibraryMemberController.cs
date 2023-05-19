@@ -4,6 +4,7 @@ using Konyvtar_nyilvantarto.Contracts.LibraryMember;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
 using Konyvtar_nyilvantarto.Services.LibraryMembers.Service;
 using Konyvtar_nyilvantarto.Validators.LibraryMemberValidators.Models;
+using LibaryRegister.Contracts.LibraryMember;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Konyvtar_nyilvantarto.Controllers
@@ -106,6 +107,17 @@ namespace Konyvtar_nyilvantarto.Controllers
             var result = await _libaryMemberService.UpdateLibraryMember(libraryMemberDto);
 
             return result ? Ok() : BadRequest();
+        }
+
+        [HttpGet("/findByName/{name}")]
+        public async Task<IActionResult> GetLibraryMember(string name)
+        {
+           
+            var libraryMemberDto = await _libaryMemberService.GetLibraryMemberByName(name);
+
+            var result = _mapper.Map<LibraryMemberDto, LibraryMemberResponse>(libraryMemberDto);
+
+            return result != null ? Ok(result) : NotFound();
         }
     }
 }

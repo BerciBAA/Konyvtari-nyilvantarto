@@ -14,13 +14,15 @@ namespace Konyvtar_nyilvantarto.Services.BorrowingData.Repository
 
         public async Task<BorrowingDataEntity> Get(Guid id)
         {
-
             return await _libraryContext.BorrowingData.FindAsync(id);
         }
 
         public async Task<IEnumerable<BorrowingDataEntity>> GetAll()
         {
-            return await _libraryContext.BorrowingData.ToListAsync();
+            return await _libraryContext.BorrowingData
+                .Include(x => x.LibraryMembers)
+                .Include(x => x.Book)
+                .ToListAsync();
         }
 
         public async Task<BorrowingDataEntity> Insert(BorrowingDataEntity borrowingData)

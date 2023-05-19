@@ -1,0 +1,57 @@
+﻿@page "/book/{id}"
+@using LibaryRegister.Contracts.BorrowingData
+@inject HttpClient HttpClient;
+@inject NavigationManager _navigationManager
+
+@if (book is not null && Id is not null)
+{
+	<h1>Book details</h1>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>On loan</th>
+				<th>Name of borrower</th>
+				<th>return date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>@book.IsOnLoan</td>
+				<td>@book.LibraryMembers.Name</td>
+				<td>@book.RetrievalLimitTime</td>
+
+			</tr>
+		</tbody>
+	</table>
+}
+else
+{
+	<h1>@er</h1>
+	
+}
+<button @onclick="@BackPage" class="btn btn-primary">Back</button>
+
+
+@code {
+	[Parameter]
+	public string Id { get; set; }
+	public string er = "";
+	private BookStateResponse? book{ get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+	
+		try
+        {
+                book = await HttpClient.GetFromJsonAsync<BookStateResponse>($"/BorrowingDataFindByBookId/{Id}");
+        } catch (HttpRequestException)
+        {
+            er = "You can borrow this book!";
+		}
+	}
+
+	public void BackPage()
+	{
+		_navigationManager.NavigateTo($"/CustomerClient/{Id}");
+	}
+}

@@ -1,4 +1,6 @@
-﻿namespace Konyvtar_nyilvantarto
+﻿using LibaryRegister.Contracts.Book;
+
+namespace Konyvtar_nyilvantarto
 {
     public interface IBookRepository
     {

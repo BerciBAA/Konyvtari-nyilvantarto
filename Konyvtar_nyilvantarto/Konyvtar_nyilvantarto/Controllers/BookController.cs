@@ -2,6 +2,7 @@
 using FluentValidation;
 using Konyvtar_nyilvantarto.Contracts.Book;
 using Konyvtar_nyilvantarto.Services.Book.Model;
+using LibaryRegister.Contracts.Book;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Konyvtar_nyilvantarto.Controllers

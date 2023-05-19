@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Konyvtar_nyilvantarto
+namespace LibaryRegister.Contracts.Book
 {
     public class BookEntity
     {
@@ -14,5 +15,6 @@ namespace Konyvtar_nyilvantarto
         public string Author { get; set; }
         public string Publisher { get; set; }
         public int YearOfPublication { get; set; }
+        public virtual BorrowingDataEntity BorrowingData { get; set; }
     }
 }
