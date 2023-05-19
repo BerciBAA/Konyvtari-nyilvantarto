@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Konyvtar_nyilvantarto.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20230517111305_updateBorrowingTable")]
-    partial class updateBorrowingTable
+    [Migration("20230518211036_NewInit")]
+    partial class NewInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,36 @@ namespace Konyvtar_nyilvantarto.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Konyvtar_nyilvantarto.BookEntity", b =>
+            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
+                {
+                    b.Property<Guid>("BorrowingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BorrowingDataBookEntityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BorrowingDataLibraryMembersFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("RentalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RetrievalLimitTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BorrowingId");
+
+                    b.HasIndex("BorrowingDataBookEntityFK")
+                        .IsUnique();
+
+                    b.HasIndex("BorrowingDataLibraryMembersFK")
+                        .IsUnique();
+
+                    b.ToTable("BorrowingData");
+                });
+
+            modelBuilder.Entity("LibaryRegister.Contracts.Book.BookEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,34 +76,7 @@ namespace Konyvtar_nyilvantarto.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
-                {
-                    b.Property<Guid>("BorrowingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BookId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("LibraryMembersMemberId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("RentalTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("RetrievalLimitTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("BorrowingId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("LibraryMembersMemberId");
-
-                    b.ToTable("BorrowingData");
-                });
-
-            modelBuilder.Entity("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", b =>
+            modelBuilder.Entity("LibaryRegister.Contracts.LibraryMember.LibraryMemberEntity", b =>
                 {
                     b.Property<Guid>("MemberId")
                         .ValueGeneratedOnAdd()
@@ -98,17 +100,31 @@ namespace Konyvtar_nyilvantarto.Migrations
 
             modelBuilder.Entity("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", b =>
                 {
-                    b.HasOne("Konyvtar_nyilvantarto.BookEntity", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId");
+                    b.HasOne("LibaryRegister.Contracts.Book.BookEntity", "Book")
+                        .WithOne("BorrowingData")
+                        .HasForeignKey("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", "BorrowingDataBookEntityFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Konyvtar_nyilvantarto.Services.LibaryMembers.Model.LibraryMemberEntity", "LibraryMembers")
-                        .WithMany()
-                        .HasForeignKey("LibraryMembersMemberId");
+                    b.HasOne("LibaryRegister.Contracts.LibraryMember.LibraryMemberEntity", "LibraryMembers")
+                        .WithOne("BorrowingData")
+                        .HasForeignKey("Konyvtar_nyilvantarto.Services.BorrowingData.Model.BorrowingDataEntity", "BorrowingDataLibraryMembersFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Book");
 
                     b.Navigation("LibraryMembers");
+                });
+
+            modelBuilder.Entity("LibaryRegister.Contracts.Book.BookEntity", b =>
+                {
+                    b.Navigation("BorrowingData");
+                });
+
+            modelBuilder.Entity("LibaryRegister.Contracts.LibraryMember.LibraryMemberEntity", b =>
+                {
+                    b.Navigation("BorrowingData");
                 });
 #pragma warning restore 612, 618
         }

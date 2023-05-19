@@ -1,6 +1,8 @@
 ﻿@page "/CustomerClient/{memberId}"
+@using Konyvtar_nyilvantarto.Contracts.Book
 @using LibaryRegister.Contracts.Book
-@inject HttpClient HttpClient;
+@inject HttpClient HttpClient
+@inject NavigationManager _navigationManager
 
 
 @if (books is null)
@@ -33,25 +35,30 @@ else
 			}
 		 </tbody>
 	 </table>
-
+	 <button @onclick="@Borrowing" class="btn btn-primary">My borrowing</button>
+	 <p>@MemberId</p>
 }
-@if(MemberId is null){
-	<p>Loading...</p>
-}else{
-	<p>@MemberId</p>
+@if(er != ""){
+	<p>@er</p>
 }
-
-
 @code {
 
 	[Parameter]
 	public string? MemberId { get; set; }
-
-	private IEnumerable<BookEntity>? books { get; set; }
+	 public string er = "";
+	private IEnumerable<BookResponse>? books { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
-		books = await HttpClient.GetFromJsonAsync<IEnumerable<BookEntity>>("Book");
-		
+		try
+		{
+			books = await HttpClient.GetFromJsonAsync<IEnumerable<BookResponse>>("Book");
+		}catch(HttpRequestException){
+			er = "no books found";
+		}
+	}
+	public void Borrowing()
+	{
+		_navigationManager.NavigateTo($"/BorrowingBook/{MemberId}");
 	}
 }

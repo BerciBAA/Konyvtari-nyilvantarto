@@ -15,7 +15,7 @@ namespace Konyvtar_nyilvantarto
 
         public async Task<BookEntity> Get(Guid id)
         {
-            return await _libraryContext.Books.FindAsync(id);
+            return await _libraryContext.Books.FirstOrDefaultAsync(x => x.Id == id); 
         }
 
         public async Task<IEnumerable<BookEntity>> GetAll()

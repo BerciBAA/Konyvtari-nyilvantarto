@@ -3,6 +3,7 @@ using FluentValidation;
 using Konyvtar_nyilvantarto.Contracts.BorrowingData;
 using Konyvtar_nyilvantarto.Services.BorrowingData.Model;
 using Konyvtar_nyilvantarto.Services.BorrowingData.Service;
+using LibaryRegister.Contracts.BorrowingData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Konyvtar_nyilvantarto.Controllers
@@ -49,11 +50,12 @@ namespace Konyvtar_nyilvantarto.Controllers
             {
                 return Conflict();
             }
-            return Created($"/borrowingdata/{insertedborrowingData.BorrowingId}", insertedborrowingData);
+            var result = _mapper.Map<BorrowingDataDto, BorrowingResponse>(insertedborrowingData);
+            return Created($"/borrowingdata/{result.BorrowingId}", result);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BorrowingResponse>>> Get()
+        public async Task<ActionResult<IEnumerable<BorrowingResponse>>> GetAll()
         {
 
             var borrowingData = await _borrowingDataService.GetAll();
@@ -80,5 +82,27 @@ namespace Konyvtar_nyilvantarto.Controllers
             }
             return Ok();
         }
+
+        [HttpGet("/BorrowingDataFindByBookId/{bookId}")]
+        public async Task<IActionResult> BorrowingDataFindByBookId(Guid bookId)
+        {
+            var BorrowingDataDto = await _borrowingDataService.GetBorrowingByBookId(bookId);
+
+            var result = _mapper.Map<BorrowingDataDto, BookStateResponse>(BorrowingDataDto);
+
+            return result != null ? Ok(result) : NotFound();
+        }
+
+        [HttpGet("/BorrowingDataFindByMemberId/{memberId}")]
+        public async Task<IActionResult> BorrowingDataFindByMemberId(Guid memberId)
+        {
+            var BorrowingDataDto = await _borrowingDataService.GetBorrowingByMemberId(memberId);
+
+            var result = _mapper.Map< IEnumerable<BorrowingDataDto>, IEnumerable<BorrowingResponse>>(BorrowingDataDto);
+
+            return result != null ? Ok(result) : NotFound();
+        }
+
+     
     }
 }

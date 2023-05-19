@@ -8,7 +8,9 @@ namespace Konyvtar_nyilvantarto.MappingProfiles.BorrowingData
     {
         public BorrwoingRequestProfile()
         {
-            CreateMap<BorrowingRequest,BorrowingDataDto>().ForMember(x => x.BorrowingId, opt => opt.Ignore()); 
+            CreateMap<BorrowingRequest, BorrowingDataDto>()
+                .ForMember(x => x.BorrowingId, opt => opt.Ignore());
+              
         }
     }
 }

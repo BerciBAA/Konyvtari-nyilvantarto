@@ -1,4 +1,6 @@
-﻿using LibaryRegister.Contracts.Book;
+﻿using Konyvtar_nyilvantarto.Services.Book.Model;
+using Konyvtar_nyilvantarto.Services.LibraryMembers.Model;
+using LibaryRegister.Contracts.Book;
 using LibaryRegister.Contracts.LibraryMember;
 
 namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
@@ -7,9 +9,11 @@ namespace Konyvtar_nyilvantarto.Services.BorrowingData.Model
     {
         public Guid BorrowingId { get; set; }
 
-        public virtual LibraryMemberEntity LibraryMembers { get; set; }
+        public virtual Guid LibraryMemberId { get; set; }
+        public virtual LibraryMemberDto LibraryMembers { get; set; }
 
-        public virtual BookEntity Book { get; set; }
+        public virtual Guid BookId { get; set; }
+        public virtual BookDto Book { get; set; }
 
         public DateTime RentalTime { get; set; }
 

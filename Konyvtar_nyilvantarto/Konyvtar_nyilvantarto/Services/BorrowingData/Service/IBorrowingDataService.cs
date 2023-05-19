@@ -5,6 +5,8 @@ namespace Konyvtar_nyilvantarto.Services.BorrowingData.Service
     public interface IBorrowingDataService
     {
         Task<BorrowingDataDto> Get(Guid id);
+        Task<BorrowingDataDto> GetBorrowingByBookId(Guid bookId);
+        Task<IEnumerable<BorrowingDataDto>> GetBorrowingByMemberId(Guid memberId);
 
         Task<IEnumerable<BorrowingDataDto>> GetAll();
 

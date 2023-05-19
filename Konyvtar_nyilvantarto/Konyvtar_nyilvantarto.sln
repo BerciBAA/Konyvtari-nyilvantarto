@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryMemberTests", "Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Konyvtar_nyilvantarto.Blazor", "Konyvtar_nyilvantarto.Blazor\Konyvtar_nyilvantarto.Blazor.csproj", "{EDB2D314-8522-4ECD-AB64-17778F78935E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibaryRegister", "LibaryRegister\LibaryRegister.csproj", "{7A05FEBF-84B2-4637-8C4C-B29C091D9654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibaryRegister", "LibaryRegister\LibaryRegister.csproj", "{7A05FEBF-84B2-4637-8C4C-B29C091D9654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

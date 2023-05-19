@@ -17,7 +17,20 @@ namespace Konyvtar_nyilvantarto.Contexts
 
         public DbSet<BorrowingDataEntity> BorrowingData { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
+            modelBuilder.Entity<LibraryMemberEntity>()
+                .HasOne(e => e.BorrowingData)
+                .WithOne(e => e.LibraryMembers)
+                .HasForeignKey<BorrowingDataEntity>(e=>e.BorrowingDataLibraryMembersFK);
+
+            modelBuilder.Entity<BookEntity>()
+               .HasOne(e => e.BorrowingData)
+               .WithOne(e => e.Book)
+               .HasForeignKey<BorrowingDataEntity>(e => e.BorrowingDataBookEntityFK);
+
+            
+        }
       
     }
 }
